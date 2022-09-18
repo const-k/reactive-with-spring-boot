@@ -4,6 +4,7 @@ import com.example.reactive.helper.HttpTraceWrapper;
 import com.example.reactive.repository.HttpTraceWrapperRepository;
 import com.example.reactive.repository.SpringDataHttpTraceRepository;
 import org.bson.Document;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.boot.actuate.trace.http.HttpTrace;
 import org.springframework.boot.actuate.trace.http.HttpTraceRepository;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +21,10 @@ import java.util.Map;
 
 @Configuration
 public class GlobalConfig {
+    @Bean Jackson2JsonMessageConverter jackson2JsonMessageConverter() {
+        return new Jackson2JsonMessageConverter();
+    }
+
     @Bean
     HttpTraceRepository springDataTraceRepository(HttpTraceWrapperRepository repository) {
         return new SpringDataHttpTraceRepository(repository);
